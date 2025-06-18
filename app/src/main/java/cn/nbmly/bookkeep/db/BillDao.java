@@ -60,20 +60,20 @@ public class BillDao {
 
         return database.update(DatabaseHelper.TABLE_BILLS, values,
                 DatabaseHelper.COLUMN_ID + " = ?",
-                new String[]{String.valueOf(bill.getId())});
+                new String[] { String.valueOf(bill.getId()) });
     }
 
     public void deleteBill(long billId) {
         database.delete(DatabaseHelper.TABLE_BILLS,
                 DatabaseHelper.COLUMN_ID + " = ?",
-                new String[]{String.valueOf(billId)});
+                new String[] { String.valueOf(billId) });
     }
 
     public Bill getBillById(long billId) {
         Cursor cursor = database.query(DatabaseHelper.TABLE_BILLS,
                 allColumns,
                 DatabaseHelper.COLUMN_ID + " = ?",
-                new String[]{String.valueOf(billId)},
+                new String[] { String.valueOf(billId) },
                 null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -89,7 +89,35 @@ public class BillDao {
         Cursor cursor = database.query(DatabaseHelper.TABLE_BILLS,
                 allColumns,
                 DatabaseHelper.COLUMN_USER_ID + " = ?",
-                new String[]{String.valueOf(userId)},
+                new String[] { String.valueOf(userId) },
+                null, null,
+                DatabaseHelper.COLUMN_CREATE_TIME + " DESC");
+
+        if (cursor != null && cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                bills.add(cursorToBill(cursor));
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        return bills;
+    }
+
+    public List<Bill> getBillsByDateRange(int userId, Date startDate, Date endDate) {
+        List<Bill> bills = new ArrayList<>();
+        String selection = DatabaseHelper.COLUMN_USER_ID + " = ? AND " +
+                DatabaseHelper.COLUMN_CREATE_TIME + " >= ? AND " +
+                DatabaseHelper.COLUMN_CREATE_TIME + " <= ?";
+        String[] selectionArgs = {
+                String.valueOf(userId),
+                String.valueOf(startDate.getTime()),
+                String.valueOf(endDate.getTime())
+        };
+
+        Cursor cursor = database.query(DatabaseHelper.TABLE_BILLS,
+                allColumns,
+                selection,
+                selectionArgs,
                 null, null,
                 DatabaseHelper.COLUMN_CREATE_TIME + " DESC");
 
@@ -116,4 +144,3 @@ public class BillDao {
         return bill;
     }
 }
-

@@ -12,11 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cn.nbmly.bookkeep.R;
 import cn.nbmly.bookkeep.db.BillDao;
 import cn.nbmly.bookkeep.models.Bill;
+import cn.nbmly.bookkeep.services.NotificationScheduler;
 
 public class AddBillActivity extends AppCompatActivity {
 
@@ -34,7 +37,7 @@ public class AddBillActivity extends AppCompatActivity {
 
         // 初始化视图
         initViews();
-        
+
         // 初始化数据库
         billDao = new BillDao(this);
         billDao.open();
@@ -67,7 +70,8 @@ public class AddBillActivity extends AppCompatActivity {
         // 监听类型选择变化
         spinnerType.setOnItemSelectedListener(new android.widget.AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(android.widget.AdapterView<?> parent, android.view.View view, int position, long id) {
+            public void onItemSelected(android.widget.AdapterView<?> parent, android.view.View view, int position,
+                    long id) {
                 updateCategorySpinner(position);
             }
 
@@ -120,7 +124,7 @@ public class AddBillActivity extends AppCompatActivity {
 
             // 创建新账单
             Bill newBill = new Bill();
-            newBill.setUserId((int)userId);
+            newBill.setUserId((int) userId);
             newBill.setAmount(amount);
             newBill.setType(type);
             newBill.setCategory(category);
@@ -131,6 +135,12 @@ public class AddBillActivity extends AppCompatActivity {
             long result = billDao.insertBill(newBill);
             if (result != -1) {
                 Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
+
+                // 如果是支出，检查预算
+                if (type == 0) { // 支出类型
+                    checkBudgetAfterExpense(userId, amount);
+                }
+
                 setResult(RESULT_OK);
                 finish();
             } else {
@@ -138,6 +148,62 @@ public class AddBillActivity extends AppCompatActivity {
             }
         } catch (NumberFormatException e) {
             Toast.makeText(this, "请输入有效的金额", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void checkBudgetAfterExpense(int userId, double expenseAmount) {
+        // 检查是否启用了预算提醒
+        SharedPreferences notificationPrefs = getSharedPreferences("notification_prefs", MODE_PRIVATE);
+        boolean budgetAlertEnabled = notificationPrefs.getBoolean("budget_alert_enabled", false);
+
+        if (!budgetAlertEnabled) {
+            return;
+        }
+
+        // 获取月度预算
+        SharedPreferences budgetPrefs = getSharedPreferences("budget_prefs", MODE_PRIVATE);
+        float monthlyBudget = budgetPrefs.getFloat("monthly_budget", 0);
+
+        if (monthlyBudget <= 0) {
+            return;
+        }
+
+        // 获取本月支出总额
+        Calendar startOfMonth = Calendar.getInstance();
+        startOfMonth.set(Calendar.DAY_OF_MONTH, 1);
+        startOfMonth.set(Calendar.HOUR_OF_DAY, 0);
+        startOfMonth.set(Calendar.MINUTE, 0);
+        startOfMonth.set(Calendar.SECOND, 0);
+
+        Calendar endOfMonth = Calendar.getInstance();
+        endOfMonth.set(Calendar.DAY_OF_MONTH, endOfMonth.getActualMaximum(Calendar.DAY_OF_MONTH));
+        endOfMonth.set(Calendar.HOUR_OF_DAY, 23);
+        endOfMonth.set(Calendar.MINUTE, 59);
+        endOfMonth.set(Calendar.SECOND, 59);
+
+        List<Bill> monthlyBills = billDao.getBillsByDateRange(userId, startOfMonth.getTime(), endOfMonth.getTime());
+
+        double totalExpense = 0;
+        for (Bill bill : monthlyBills) {
+            if (bill.getType() == 0) { // 支出类型
+                totalExpense += bill.getAmount();
+            }
+        }
+
+        // 检查预算
+        double remainingBudget = monthlyBudget - totalExpense;
+        double percentageUsed = (totalExpense / monthlyBudget) * 100;
+
+        // 如果支出超过预算的90%，显示提醒
+        if (percentageUsed >= 90) {
+            String message = String.format("本月预算已使用 %.1f%%，剩余 %.2f 元", percentageUsed, remainingBudget);
+            cn.nbmly.bookkeep.services.NotificationService.showBudgetNotification(this, message);
+        }
+
+        // 如果超支，显示超支提醒
+        if (remainingBudget < 0) {
+            String message = String.format("本月预算已超支 %.2f 元", Math.abs(remainingBudget));
+            cn.nbmly.bookkeep.services.NotificationService.showBudgetNotification(this, message);
         }
     }
 
@@ -149,4 +215,4 @@ public class AddBillActivity extends AppCompatActivity {
             billDao = null;
         }
     }
-} 
+}

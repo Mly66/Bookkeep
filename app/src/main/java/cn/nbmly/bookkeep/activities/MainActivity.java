@@ -37,6 +37,7 @@ import cn.nbmly.bookkeep.fragments.AboutFragment;
 import cn.nbmly.bookkeep.fragments.ProfileFragment;
 import cn.nbmly.bookkeep.models.Bill;
 import cn.nbmly.bookkeep.models.User;
+import cn.nbmly.bookkeep.services.NotificationService;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 创建通知频道
+        NotificationService.createNotificationChannels(this);
 
         // 初始化 ActivityResultLauncher
         addBillLauncher = registerForActivityResult(
@@ -199,6 +203,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             selectedFragment = new ProfileFragment();
         } else if (id == R.id.nav_statistics) {
             startActivity(new Intent(this, StatisticsActivity.class));
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        } else if (id == R.id.nav_notifications) {
+            startActivity(new Intent(this, NotificationSettingsActivity.class));
             drawer.closeDrawer(GravityCompat.START);
             return true;
         } else if (id == R.id.nav_about) {
