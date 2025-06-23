@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,6 +43,9 @@ public class StatisticsActivity extends AppCompatActivity {
     private Spinner spinnerStatisticsType;
     private BillDao billDao;
     private int loggedInUserId;
+    private TextView tvCardMonth, tvCardWeek, tvCardYear;
+    private TextView tvNetIncome, tvMaxExpense, tvMaxIncome, tvAvgExpense, tvAvgIncome, tvTopExpenseCategory,
+            tvTopIncomeCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,18 @@ public class StatisticsActivity extends AppCompatActivity {
         pieChart = findViewById(R.id.pie_chart);
         barChart = findViewById(R.id.bar_chart);
         spinnerStatisticsType = findViewById(R.id.spinner_statistics_type);
+
+        // 新增统计卡片和信息区View初始化
+        tvCardMonth = findViewById(R.id.tv_card_month_value);
+        tvCardWeek = findViewById(R.id.tv_card_week_value);
+        tvCardYear = findViewById(R.id.tv_card_year_value);
+        tvNetIncome = findViewById(R.id.tv_net_income);
+        tvMaxExpense = findViewById(R.id.tv_max_expense);
+        tvMaxIncome = findViewById(R.id.tv_max_income);
+        tvAvgExpense = findViewById(R.id.tv_avg_expense);
+        tvAvgIncome = findViewById(R.id.tv_avg_income);
+        tvTopExpenseCategory = findViewById(R.id.tv_top_expense_category);
+        tvTopIncomeCategory = findViewById(R.id.tv_top_income_category);
 
         SharedPreferences sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
         loggedInUserId = sharedPref.getInt("loggedInUserId", -1);
@@ -71,6 +87,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 } else { // 按月份统计
                     displayMonthlyStatistics();
                 }
+                updateStatisticsInfo();
             }
 
             @Override
@@ -81,6 +98,7 @@ public class StatisticsActivity extends AppCompatActivity {
 
         // Initial display
         displayCategoryStatistics();
+        updateStatisticsInfo();
     }
 
     private void displayCategoryStatistics() {
@@ -171,12 +189,10 @@ public class StatisticsActivity extends AppCompatActivity {
 
         BarData data = new BarData(expenseDataSet, incomeDataSet);
 
-        // 设置柱状图组的宽度和间距
-        float groupSpace = 0.06f; // 组间距
-        float barSpace = 0.02f; // 每组内柱状条间距
-        float barWidth = 0.45f; // 每条柱状条的宽度
-        // (barWidth + barSpace) * 2 + groupSpace = 1.00 -> 0.45*2 + 0.02*2 + 0.06 =
-        // 0.90 + 0.04 + 0.06 = 1.00
+        float groupSpace = 0.06f;
+        float barSpace = 0.02f;
+        float barWidth = 0.45f;
+
         data.setBarWidth(barWidth);
         barChart.setData(data);
         barChart.groupBars(-0.5f, groupSpace, barSpace);
@@ -204,6 +220,99 @@ public class StatisticsActivity extends AppCompatActivity {
             categories = getResources().getStringArray(R.array.income_categories);
         }
         return category >= 0 && category < categories.length ? categories[category] : "未知";
+    }
+
+    /**
+     * 统计并刷新顶部卡片和统计信息区
+     */
+    private void updateStatisticsInfo() {
+        List<Bill> bills = billDao.getAllBillsByUserId(loggedInUserId);
+        // 时间相关
+        Calendar now = Calendar.getInstance();
+        int curYear = now.get(Calendar.YEAR);
+        int curMonth = now.get(Calendar.MONTH);
+        int curWeek = now.get(Calendar.WEEK_OF_YEAR);
+        float monthExpense = 0, monthIncome = 0;
+        float weekExpense = 0, weekIncome = 0;
+        float yearExpense = 0, yearIncome = 0;
+        float totalExpense = 0, totalIncome = 0;
+        float maxExpense = 0, maxIncome = 0;
+        float sumExpense = 0, sumIncome = 0;
+        int countExpense = 0, countIncome = 0;
+        Map<Integer, Float> expenseCategoryMap = new HashMap<>();
+        Map<Integer, Float> incomeCategoryMap = new HashMap<>();
+        for (Bill bill : bills) {
+            Calendar c = Calendar.getInstance();
+            c.setTime(bill.getCreateTime());
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int week = c.get(Calendar.WEEK_OF_YEAR);
+            float amount = (float) bill.getAmount();
+            if (bill.getType() == 0) { // 支出
+                totalExpense += amount;
+                sumExpense += amount;
+                countExpense++;
+                if (amount > maxExpense)
+                    maxExpense = amount;
+                if (year == curYear)
+                    yearExpense += amount;
+                if (year == curYear && month == curMonth)
+                    monthExpense += amount;
+                if (year == curYear && week == curWeek)
+                    weekExpense += amount;
+                // 类别统计
+                int cat = bill.getCategory();
+                expenseCategoryMap.put(cat, expenseCategoryMap.getOrDefault(cat, 0f) + amount);
+            } else { // 收入
+                totalIncome += amount;
+                sumIncome += amount;
+                countIncome++;
+                if (amount > maxIncome)
+                    maxIncome = amount;
+                if (year == curYear)
+                    yearIncome += amount;
+                if (year == curYear && month == curMonth)
+                    monthIncome += amount;
+                if (year == curYear && week == curWeek)
+                    weekIncome += amount;
+                // 类别统计
+                int cat = bill.getCategory();
+                incomeCategoryMap.put(cat, incomeCategoryMap.getOrDefault(cat, 0f) + amount);
+            }
+        }
+        // 顶部卡片
+        tvCardMonth.setText(String.format("%.2f/%.2f", monthIncome, monthExpense));
+        tvCardWeek.setText(String.format("%.2f/%.2f", weekIncome, weekExpense));
+        tvCardYear.setText(String.format("%.2f/%.2f", yearIncome, yearExpense));
+        // 统计信息区
+        tvNetIncome.setText("净收入：" + String.format("%.2f", totalIncome - totalExpense));
+        tvMaxExpense.setText("最大支出：" + (maxExpense > 0 ? String.format("%.2f", maxExpense) : "-"));
+        tvMaxIncome.setText("最大收入：" + (maxIncome > 0 ? String.format("%.2f", maxIncome) : "-"));
+        tvAvgExpense.setText("平均支出：" + (countExpense > 0 ? String.format("%.2f", sumExpense / countExpense) : "-"));
+        tvAvgIncome.setText("平均收入：" + (countIncome > 0 ? String.format("%.2f", sumIncome / countIncome) : "-"));
+        tvTopExpenseCategory.setText("支出Top3类别：" + getTopCategoriesString(expenseCategoryMap, 0));
+        tvTopIncomeCategory.setText("收入Top3类别：" + getTopCategoriesString(incomeCategoryMap, 1));
+    }
+
+    /**
+     * 获取Top3类别字符串
+     */
+    private String getTopCategoriesString(Map<Integer, Float> map, int type) {
+        if (map.isEmpty())
+            return "-";
+        List<Map.Entry<Integer, Float>> list = new ArrayList<>(map.entrySet());
+        list.sort((a, b) -> Float.compare(b.getValue(), a.getValue()));
+        String[] categories = type == 0 ? getResources().getStringArray(R.array.expense_categories)
+                : getResources().getStringArray(R.array.income_categories);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < Math.min(3, list.size()); i++) {
+            int cat = list.get(i).getKey();
+            float amt = list.get(i).getValue();
+            sb.append(categories[cat]).append("(").append(String.format("%.2f", amt)).append(")");
+            if (i < Math.min(3, list.size()) - 1)
+                sb.append("，");
+        }
+        return sb.toString();
     }
 
     @Override

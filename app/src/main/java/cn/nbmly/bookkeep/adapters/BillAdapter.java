@@ -59,6 +59,13 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
         holder.tvNote.setText(String.format("备注: %s", bill.getNote()));
         holder.tvTime.setText(String.format("时间: %s", dateFormat.format(bill.getCreateTime())));
 
+        // 设置金额颜色：支出为红色，收入为绿色
+        if (bill.getType() == 0) { // 支出
+            holder.tvAmount.setTextColor(context.getResources().getColor(R.color.expenseColor));
+        } else { // 收入
+            holder.tvAmount.setTextColor(context.getResources().getColor(R.color.incomeColor));
+        }
+
         holder.itemView.setOnClickListener(v -> {
             if (onItemClickListener != null) {
                 onItemClickListener.onItemClick(bill);
@@ -119,4 +126,3 @@ public class BillAdapter extends RecyclerView.Adapter<BillAdapter.ViewHolder> {
         }
     }
 }
-

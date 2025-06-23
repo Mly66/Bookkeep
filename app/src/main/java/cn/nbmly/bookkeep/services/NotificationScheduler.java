@@ -96,7 +96,6 @@ public class NotificationScheduler {
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
-        // 如果时间已经过了，设置为下周
         if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
             calendar.add(Calendar.WEEK_OF_YEAR, 1);
         }
@@ -145,7 +144,7 @@ public class NotificationScheduler {
 
         double totalExpense = 0;
         for (Bill bill : monthlyBills) {
-            if (bill.getType() == 0) { // 支出类型
+            if (bill.getType() == 0) {
                 totalExpense += bill.getAmount();
             }
         }

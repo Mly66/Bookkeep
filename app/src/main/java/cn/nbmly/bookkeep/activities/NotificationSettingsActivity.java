@@ -19,6 +19,7 @@ import java.util.Calendar;
 
 import cn.nbmly.bookkeep.R;
 import cn.nbmly.bookkeep.services.NotificationScheduler;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class NotificationSettingsActivity extends AppCompatActivity {
 
@@ -141,7 +142,7 @@ public class NotificationSettingsActivity extends AppCompatActivity {
         String[] days = { "周日", "周一", "周二", "周三", "周四", "周五", "周六" };
         int currentDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
 
-        new androidx.appcompat.app.AlertDialog.Builder(this)
+        new MaterialAlertDialogBuilder(this)
                 .setTitle("选择星期")
                 .setSingleChoiceItems(days, currentDay, (dialog, which) -> {
                     tvWeeklyTime.setText(String.format("%s %02d:%02d", days[which], hour, minute));

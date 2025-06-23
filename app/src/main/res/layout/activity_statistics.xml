@@ -5,39 +5,216 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="20dp"
+    android:background="#F8F9FA"
     tools:context=".activities.StatisticsActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="账单统计"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="24dp"/>
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:layout_marginBottom="28dp"/>
 
     <Spinner
         android:id="@+id/spinner_statistics_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/statistics_types"
-        android:minHeight="48dp" />
+        android:background="@drawable/bg_spinner_rounded"
+        android:elevation="2dp"
+        android:minHeight="48dp"
+        android:layout_marginBottom="16dp" />
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pie_chart"
+    <LinearLayout
+        android:id="@+id/layout_statistics_cards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/bg_spinner_rounded"
+            android:padding="12dp"
+            android:layout_marginEnd="8dp">
+            <TextView
+                android:id="@+id/tv_card_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本月收支"
+                android:textColor="#666666"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/tv_card_month_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/bg_spinner_rounded"
+            android:padding="12dp"
+            android:layout_marginEnd="8dp">
+            <TextView
+                android:id="@+id/tv_card_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本周收支"
+                android:textColor="#666666"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/tv_card_week_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="@drawable/bg_spinner_rounded"
+            android:padding="12dp">
+            <TextView
+                android:id="@+id/tv_card_year"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="本年收支"
+                android:textColor="#666666"
+                android:textSize="13sp"/>
+            <TextView
+                android:id="@+id/tv_card_year_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 新增统计信息区 -->
+    <LinearLayout
+        android:id="@+id/layout_statistics_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#00FFFFFF"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/tv_net_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="净收入：-"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_max_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最大支出：-"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_max_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="最大收入：-"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_avg_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="平均支出：-"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_avg_income"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="平均收入：-"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_top_expense_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支出Top3类别：-"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_top_income_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收入Top3类别：-"
+            android:textColor="#333333"
+            android:textSize="15sp"
+            android:layout_marginBottom="4dp"/>
+    </LinearLayout>
+
+    <!-- 统计信息区结束 -->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="16dp"/>
+        android:orientation="vertical">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/bar_chart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"/>
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:background="#FFFFFF"
+            android:elevation="2dp"
+            android:clipToOutline="true"
+            android:layout_marginBottom="8dp"/>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/bar_chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp"
+            android:background="#FFFFFF"
+            android:elevation="2dp"
+            android:clipToOutline="true"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
+    </LinearLayout>
 
 </LinearLayout>
 

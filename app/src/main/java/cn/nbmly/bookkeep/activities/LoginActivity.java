@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (userDao.checkUser(username, password)) {
-            // Save login status
             SharedPreferences sharedPref = getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean("isLoggedIn", true);
@@ -72,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
-            finish(); // Close login activity
+            finish();
         } else {
             Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show();
         }

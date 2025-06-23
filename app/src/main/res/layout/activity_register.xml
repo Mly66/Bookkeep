@@ -6,47 +6,72 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="16dp"
+    android:padding="20dp"
+    android:background="#F8F9FA"
     tools:context=".activities.RegisterActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="用户注册"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:layout_marginBottom="36dp"/>
 
-    <EditText
-        android:id="@+id/et_username_reg"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="用户名"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        android:layout_marginBottom="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_username_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="用户名"
+            android:inputType="text"
+            android:minHeight="48dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/et_password_reg"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="密码"
-        android:inputType="textPassword"
-        android:minHeight="48dp" />
+        android:layout_marginBottom="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_password_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/et_confirm_password_reg"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="确认密码"
-        android:inputType="textPassword"
-        android:minHeight="48dp" />
+        android:layout_marginBottom="16dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_confirm_password_reg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="确认密码"
+            android:inputType="textPassword"
+            android:minHeight="48dp" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_register_confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="注册"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="20dp"
+        app:cornerRadius="8dp"
+        app:backgroundTint="@color/colorPrimary"
+        android:textColor="#FFFFFF"
+        app:elevation="4dp"/>
 
 </LinearLayout>
 

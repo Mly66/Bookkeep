@@ -3,42 +3,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="20dp"
+    android:background="#F8F9FA">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="关于 Bookkeep"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:layout_marginBottom="20dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="版本：1.0.0"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:elevation="2dp"
+        android:padding="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:clipToOutline="true"
+        android:backgroundTint="#FFFFFF"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_gravity="center_horizontal"
+        android:radius="12dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bookkeep 是一个简单的记账应用，帮助您轻松管理个人财务。"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="版本：1.0.0"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="主要功能："
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bookkeep 是一个简单的记账应用，帮助您轻松管理个人财务。"
+            android:textSize="16sp"
+            android:layout_marginBottom="16dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="• 记录日常收支\n• 查看消费统计\n• 管理个人资料"
-        android:textSize="16sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="主要功能："
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="• 记录日常收支\n• 查看消费统计\n• 管理个人资料"
+            android:textSize="16sp"/>
+    </LinearLayout>
 
 </LinearLayout> 

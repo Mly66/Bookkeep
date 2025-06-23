@@ -57,7 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Check if username already exists
         if (userDao.getUserByUsername(username) != null) {
             Toast.makeText(this, "用户名已存在", Toast.LENGTH_SHORT).show();
             return;
@@ -70,7 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
-            finish(); // Close register activity
+            finish();
         } else {
             Toast.makeText(this, "注册失败", Toast.LENGTH_SHORT).show();
         }

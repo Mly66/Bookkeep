@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.util.List;
 
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 设置长按事件
         billAdapter.setOnItemLongClickListener(bill -> {
-            new AlertDialog.Builder(MainActivity.this)
+            new MaterialAlertDialogBuilder(MainActivity.this)
                     .setTitle("删除账单")
                     .setMessage("确定要删除这条账单记录吗？")
                     .setPositiveButton("确定", (dialog, which) -> {

@@ -5,17 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="20dp"
+    android:background="#F8F9FA"
     tools:context=".activities.BillDetailActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="账单详情"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="24dp"/>
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:layout_marginBottom="28dp"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -43,7 +45,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:minHeight="48dp"/>
+        android:minHeight="48dp"
+        android:background="@drawable/bg_spinner_rounded"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,7 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:minHeight="48dp"/>
+        android:minHeight="48dp"
+        android:background="@drawable/bg_spinner_rounded"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -88,19 +92,25 @@
         android:orientation="horizontal"
         android:gravity="end">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="取消"
             android:layout_marginEnd="8dp"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            app:cornerRadius="8dp"
+            app:elevation="0dp"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="保存"/>
+            android:text="保存"
+            app:cornerRadius="8dp"
+            app:backgroundTint="@color/colorPrimary"
+            android:textColor="#FFFFFF"
+            app:elevation="4dp"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -13,4 +13,9 @@
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
     <color name="colorAccent">#03A9F4</color>
+
+    <color name="incomeColor">#43A047</color> <!-- 绿色，收入 -->
+    <color name="expenseColor">#E53935</color> <!-- 红色，支出 -->
+
+    <color name="billCardBg">#B9E2A9</color> <!-- 卡片背景色，清新浅色 -->
 </resources>

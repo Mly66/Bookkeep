@@ -9,14 +9,15 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#F7F9FB">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,9 +29,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,16 +44,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="每日记账提醒"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="每天定时提醒您记录支出"
-                        android:textColor="@android:color/darker_gray"
-                        android:layout_marginBottom="16dp" />
+                        android:textColor="#8A8A8A"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="20dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -69,16 +73,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="提醒时间："
-                            android:layout_marginEnd="8dp" />
+                            android:layout_marginEnd="8dp"
+                            android:textColor="#666666"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/tv_daily_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="20:00"
-                            android:textColor="?attr/colorPrimary"
-                            android:background="?attr/selectableItemBackground"
-                            android:padding="8dp" />
+                            android:textColor="@color/colorPrimary"
+                            android:background="@drawable/bg_spinner_rounded"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -90,9 +100,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -104,16 +115,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="每周统计报告"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="每周定时发送支出统计报告"
-                        android:textColor="@android:color/darker_gray"
-                        android:layout_marginBottom="16dp" />
+                        android:textColor="#8A8A8A"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="20dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -131,16 +144,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="报告时间："
-                            android:layout_marginEnd="8dp" />
+                            android:layout_marginEnd="8dp"
+                            android:textColor="#666666"
+                            android:textSize="15sp" />
 
                         <TextView
                             android:id="@+id/tv_weekly_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="周日 09:00"
-                            android:textColor="?attr/colorPrimary"
-                            android:background="?attr/selectableItemBackground"
-                            android:padding="8dp" />
+                            android:textColor="@color/colorPrimary"
+                            android:background="@drawable/bg_spinner_rounded"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -152,9 +171,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -166,16 +186,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="预算提醒"
-                        android:textSize="18sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:layout_marginBottom="8dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="当支出接近或超过预算时提醒"
-                        android:textColor="@android:color/darker_gray"
-                        android:layout_marginBottom="16dp" />
+                        android:textColor="#8A8A8A"
+                        android:textSize="14sp"
+                        android:layout_marginBottom="20dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -193,7 +215,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="启用预算提醒" />
+                            android:text="启用预算提醒"
+                            android:textColor="#666666"
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -207,7 +231,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="月度预算："
-                            android:layout_marginEnd="8dp" />
+                            android:layout_marginEnd="8dp"
+                            android:textColor="#666666"
+                            android:textSize="15sp" />
 
                         <EditText
                             android:id="@+id/et_monthly_budget"
@@ -216,14 +242,20 @@
                             android:layout_weight="1"
                             android:hint="请输入月度预算金额"
                             android:inputType="numberDecimal"
-                            android:padding="8dp"
-                            android:background="@android:drawable/edit_text" />
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:background="@drawable/bg_spinner_rounded"
+                            android:textSize="16sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="元"
-                            android:layout_marginStart="8dp" />
+                            android:layout_marginStart="8dp"
+                            android:textColor="#666666"
+                            android:textSize="15sp" />
 
                     </LinearLayout>
 
@@ -236,25 +268,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="16dp">
+                android:layout_marginTop="24dp">
 
                 <Button
                     android:id="@+id/btn_save_settings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="保存设置"
-                    android:textColor="@android:color/white"
-                    android:background="?attr/colorPrimary"
-                    android:layout_marginBottom="12dp" />
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_btn_green_gradient"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp" />
 
                 <Button
                     android:id="@+id/btn_test_notification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="测试通知"
-                    android:textColor="?attr/colorPrimary"
-                    android:background="@android:color/transparent"
-                    android:backgroundTint="@android:color/transparent" />
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/bg_btn_orange_stroke"
+                    android:textSize="18sp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp" />
 
             </LinearLayout>
 
